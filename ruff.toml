@@ -1,0 +1,119 @@
+# See config options and defaults:
+#   https://docs.astral.sh/ruff/settings/
+# ##############################################################################
+#
+# Style guides in order of precedence (1 overrides 2, 2 overrides 3, ...)
+# 1. Team style guide:
+#    - https://dev.azure.com/SHI-DataScience/Data%20Science/_wiki/wikis/Data-Science.wiki/534/Style-Guide
+# 2. Google style guide:
+#    - https://google.github.io/styleguide/pyguide.html
+# 3. PEP8
+#    - https://peps.python.org/pep-0008/
+# 4. Use your best judgement.
+# ##############################################################################
+
+
+# Per the AI/ML team style guide.
+line-length = 120
+
+
+[format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+
+# Enable auto-formatting of code examples in docstrings. Markdown,
+# reStructuredText code/literal blocks and doctests are all supported.
+docstring-code-format = true
+
+
+[lint]
+# ANN - Issues raised by flake8-annotations
+# B - Issues raised by flake8-bugbear, includes the B9xx which are more opinionated
+# BLK - Issues raised by Black
+# C - Issues rasied by mccabe (complexity)
+# D - Issues raised by flake8-docstrings
+# E - Errors reported by pycodestyle
+# DAR - Issues raised by darglint
+# F - Errors raised by pyflakes
+# I - Issues raised by flake8-import-order
+# S - Issues raised by flake8-bandit (security)
+# W - Warnings reported by pycodestyle
+select = ["ANN", "B", "B9", "C", "D", "E", "F", "I", "S", "W"]
+
+
+# https://docs.astral.sh/ruff/rules/
+#
+# D107 - Missing docstring in `__init__` method.
+# E203 - Whitespace before ':'
+# E501 - Line too long; With B9 enabled this is a duplicate of B950.  Disable it to avoid duplicate.
+#        Unlike E501, from pycodestyle, B950 only triggers if max-line-length is exceeded by 10% or
+#        more.  Inspired by Raymond Hettinger's "Beyond PEP8" talk.
+ignore = ["D107", "E203", "E501"]
+
+
+# Require that a human fix these classes of errors.
+unfixable = ["B"]
+
+
+[lint.per-file-ignores]
+# D104 - Missing docstring in public package.
+"__init__.py" = ["D104"]
+"tests/*" = ["D"]
+
+
+[lint.isort]
+section-order = [
+    "future",
+    "standard-library",
+    "langchain",
+    "third-party",
+    "first-party",
+    "local-folder",
+    "testing",
+    "first-party-testsuite",
+]
+
+
+[lint.isort.sections]
+"testing" = ["unittest", "pytest", "hypothesis"]
+"langchain" = ["langchain-*"]
+"first-party-testsuite" = ["tests"]
+
+
+[lint.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds this value.
+max-complexity = 5
+
+
+[lint.pep8-naming]
+classmethod-decorators = [
+    # Allow Pydantic's `@validator` decorator to trigger class method treatment.
+    "pydantic.validator",
+    # Allow SQLAlchemy's dynamic decorators, like `@field.expression`, to trigger class method treatment.
+    "declared_attr",
+    "expression",
+    "comparator",
+]
+
+
+[lint.pycodestyle]
+# Ignore line-length violations (E501) for comments starting with
+# `task-tags` (By default: `TODO`, `FIXME`, and `XXX`).
+ignore-overlong-task-comments = true
+
+
+[lint.pydocstyle]
+convention = "google"

@@ -1,0 +1,26 @@
+[project]
+name = "unittest-patterns"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Guy Hoozdis", email = "GuyHoozdis@users.noreply.github.com" }
+]
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = [
+    "coverage>=7.8.0",
+    "mypy>=1.15.0",
+    "nox>=2025.5.1",
+]
+debug = [
+    "ipdb>=0.13.13",
+    "ipython>=9.2.0",
+    "pickleshare>=0.7.5",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
